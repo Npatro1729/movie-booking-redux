@@ -1,161 +1,130 @@
-import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import { useParams, useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { bookMovies } from "../redux/actions"
 
 const MovieBooking = (props) => {
   const { title } = useParams();
   const navigate = useNavigate();
+  const [selectedDateTime, setSelectedDateTime] = useState("");
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
-  const [selectedTime, setSelectedTime] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [seats, setSeats] = useState(1);
+  if (!props.movieData || props.movieData.length === 0) {
+    return <p style={{ textAlign: "center", marginTop: "2rem" }}>Loading movie data...</p>;
+  }
 
-  const seatPrice = 60;
-  const totalPrice = seats * seatPrice;
+  const movie = props.movieData.find((m) => m.title === title);
+  if (!movie) {
+    return <p style={{ textAlign: "center", marginTop: "2rem" }}>Movie "{title}" not found.</p>;
+  }
 
-  const handleTimeSelect = (event) => {
-    setSelectedTime(event.target.value);
-  };
+  const rate = 60;
 
-  const handleSeatsChange = (event) => {
-    setSeats(parseInt(event.target.value));
-  };
-
-  const handleSubmit = async(event) => {
-    event.preventDefault();
-    if (!name || !email || !selectedTime || !seats) {
-      alert("Please fill in all fields.");
-      return;
+  const getAvailableTimeSlots = () => {
+    const slots = [];
+    const now = new Date();
+    for (let i = 0; i < 5; i++) {
+      const date = new Date(now);
+      date.setDate(now.getDate() + i);
+      ["10:00", "14:30", "18:00"].forEach((time) => {
+        slots.push(`${date.toISOString().split("T")[0]}T${time}`);
+      });
     }
-    
-    alert(
-      `Booking confirmed for ${name}\nTime: ${selectedTime}\nSeats: ${seats}\nTotal: ₹${totalPrice}`
-    );
-    navigate(`/confirmation/${title}`, {
-        state: {
-            name,
-            email,
-            selectedTime,
-            seats,
-            totalPrice
-        }
-    });
-    
+    return slots;
+  };
+
+  const getAvailableSeats = () => {
+    const seats = [];
+    for (let row of ["A", "B", "C"]) {
+      for (let i = 1; i <= 10; i++) {
+        seats.push(`${row}${i}`);
+      }
+    }
+    return seats;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      movieTitle: title,
+      dateTime: selectedDateTime,
+      seats: selectedSeats,
+      totalAmount: selectedSeats.length * rate
+    };
+    await props.bookMovies(data);
+    navigate("/confirmation", { state: data });
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h2 style={{ color: "#333" }}>Movie Booking Page</h2>
-      <p>
-        Select movie details for: <strong>{title}</strong>
-      </p>
-
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          width: "300px",
-          margin: "0 auto",
-        }}
-      >
-        <label htmlFor="name" style={{ marginBottom: "5px" }}>
-          Your Name:
+    <section style={{
+      maxWidth: "600px",
+      margin: "2rem auto",
+      padding: "2rem",
+      border: "1px solid #ccc",
+      borderRadius: "10px",
+      backgroundColor: "#f9f9f9",
+      fontFamily: "Arial, sans-serif"
+    }}>
+      <h2 style={{ textAlign: "center", color: "#2c3e50" }}>🎬 Book Tickets for {title}</h2>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <label>
+          <strong>Select Date & Time:</strong><br />
+          <select
+            value={selectedDateTime}
+            onChange={(e) => setSelectedDateTime(e.target.value)}
+            style={{ width: "100%", padding: "0.5rem" }}
+          >
+            <option value="">--Select--</option>
+            {getAvailableTimeSlots().map((slot) => (
+              <option key={slot} value={slot}>
+                {new Date(slot).toLocaleString()}
+              </option>
+            ))}
+          </select>
         </label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
-          required
-        />
 
-        <label htmlFor="email" style={{ marginBottom: "5px" }}>
-          Your Email:
+        <label>
+          <strong>Select Seats:</strong><br />
+          <select
+            multiple
+            value={selectedSeats}
+            onChange={(e) => setSelectedSeats([...e.target.selectedOptions].map(o => o.value))}
+            style={{ width: "100%", height: "120px", padding: "0.5rem" }}
+          >
+            {getAvailableSeats().map(seat => (
+              <option key={seat} value={seat}>Seat {seat}</option>
+            ))}
+          </select>
+          <small>Hold Ctrl (Windows) or Cmd (Mac) to select multiple seats</small>
         </label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
-          required
-        />
 
-        <label htmlFor="timeSlot" style={{ marginBottom: "5px" }}>
-          Select a Time Slot:
-        </label>
-        <select
-          id="timeSlot"
-          value={selectedTime}
-          onChange={handleTimeSelect}
-          style={{
-            padding: "8px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
-          required
-        >
-          <option value="">--Choose a Time Slot--</option>
-          <option value="10:00 AM">10:00 AM</option>
-          <option value="12:30 PM">12:30 PM</option>
-          <option value="3:00 PM">3:00 PM</option>
-          <option value="6:30 PM">6:30 PM</option>
-          <option value="9:00 PM">9:00 PM</option>
-        </select>
-
-        <label htmlFor="seats" style={{ marginBottom: "5px" }}>
-          Number of Seats:
-        </label>
-        <select
-          id="seats"
-          value={seats}
-          onChange={handleSeatsChange}
-          style={{
-            padding: "8px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
-          required
-        >
-          {[...Array(10)].map((_, i) => (
-            <option key={i + 1} value={i + 1}>
-              {i + 1}
-            </option>
-          ))}
-        </select>
-
-        <p style={{ fontWeight: "bold", marginTop: "10px" }}>
-          Total Price: ₹{totalPrice}
-        </p>
+        <p><strong>Total Amount:</strong> ₹{selectedSeats.length * rate}</p>
 
         <button
           type="submit"
+          disabled={!selectedDateTime || selectedSeats.length === 0}
           style={{
-            padding: "10px",
-            borderRadius: "4px",
+            padding: "0.75rem",
+            backgroundColor: "#2980b9",
+            color: "white",
             border: "none",
-            backgroundColor: "#4CAF50",
-            color: "#fff",
-            cursor: "pointer",
+            borderRadius: "5px",
+            cursor: "pointer"
           }}
         >
-          Book Ticket
+          Confirm Booking
         </button>
       </form>
-    </div>
+    </section>
   );
 };
 
-export default MovieBooking;
+const mapStateToProps = (state) => ({
+  movieData: state.movies.movieData
+});
+
+const mapDispatchToProps = {
+  bookMovies
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieBooking);

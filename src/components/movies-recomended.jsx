@@ -3,39 +3,52 @@ import { useEffect } from "react";
 import { getMovies } from "../redux/actions";
 import { Link } from "react-router-dom";
 
-const MovieRecomended = () => {
-  const dispatch = useDispatch();
-  const { movieData, isloading } = useSelector((state) => state.movies);
+const MovieRecomended = ({ searchTerm = "" }) => {
+    const dispatch = useDispatch();
+    const { movieData, isloading } = useSelector((state) => state.movies);
   
-
-  useEffect(() => {
-    dispatch(getMovies());
-  }, [dispatch]);
-
-  useEffect(() => {
-    console.log("Redux state movieData:", movieData);  // Log the movie data
-  }, [movieData]);
-
-  if (isloading) return <p>Loading…</p>;
-
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-      {movieData.map((movie) => (
-        <div key={movie.id} style={cardStyle}>
-          <img
-            src={movie.image}
-            alt={movie.title}
-            style={{ width: "100%", borderRadius: "8px", marginBottom: "10px" }}
-          />
-          <p><strong>{movie.title}</strong> ({movie.year})</p>
-          <p>{movie.genre} • ⭐{movie.rating}</p>
-          <button> <Link to={`/movieBooking/${movie.title}`}>Go to moviebooking</Link></button>
-        </div>
-      ))}
-    </div>
-  );
-};
-
+    useEffect(() => {
+      dispatch(getMovies());
+    }, [dispatch]);
+  
+    if (isloading) return <p>Loading…</p>;
+  
+    const filteredMovies = movieData.filter((movie) =>
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  
+    return (
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+        {filteredMovies.length > 0 ? (
+          filteredMovies.map((movie) => (
+            <div key={movie.id} style={cardStyle}>
+              <img
+                src={movie.image}
+                alt={movie.title}
+                style={{ width: "100%", borderRadius: "8px", marginBottom: "10px" }}
+              />
+              <p><strong>{movie.title}</strong> ({movie.year})</p>
+              <p>{movie.genre} • ⭐{movie.rating}</p>
+              <button style={{ ...buttonStyle, backgroundColor: "#87CEEB" }}><Link to={`/movieBooking/${movie.title}`}>BOOK NOW</Link></button>
+            </div>
+          ))
+        ) : (
+          <p>No movies found for "{searchTerm}"</p>
+        )}
+      </div>
+    );
+  };
+  
+  const buttonStyle = {
+    padding: "15px 30px",
+    fontSize: "18px",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    marginRight: "20px",
+  };
 
 const cardStyle = {
   border: "1px solid #ccc",

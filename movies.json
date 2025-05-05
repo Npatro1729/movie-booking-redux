@@ -1,85 +1,162 @@
 {
-    "movies": [
-      {
-        "id": 1,
-        "title": "Inception",
-        "year": 2010,
-        "genre": "Sci-Fi",
-        "rating": 8.8,
-        "image": "https://image.tmdb.org/t/p/w500/s3TBrRGB1iav7gFOCNx3H31MoES.jpg"
-      },
-      {
-        "id": 2,
-        "title": "The Dark Knight",
-        "year": 2008,
-        "genre": "Action",
-        "rating": 9.0,
-        "image": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
-      },
-      {
-        "id": 3,
-        "title": "Interstellar",
-        "year": 2014,
-        "genre": "Adventure",
-        "rating": 8.6,
-        "image": "https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg"
-      },
-      {
-        "id": 4,
-        "title": "Avengers: Endgame",
-        "year": 2019,
-        "genre": "Superhero",
-        "rating": 8.4,
-        "image": "https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg"
-      },
-      {
-        "id": 5,
-        "title": "The Matrix",
-        "year": 1999,
-        "genre": "Sci-Fi",
-        "rating": 8.7,
-        "image": "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
-      },
-      {
-        "id": 6,
-        "title": "Forrest Gump",
-        "year": 1994,
-        "genre": "Drama",
-        "rating": 8.8,
-        "image": "https://image.tmdb.org/t/p/w500/saHP97rTPS5eLmrLQEcANmKrsFl.jpg"
-      },
-      {
-        "id": 7,
-        "title": "The Shawshank Redemption",
-        "year": 1994,
-        "genre": "Drama",
-        "rating": 9.3,
-        "image": "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
-      },
-      {
-        "id": 8,
-        "title": "Gladiator",
-        "year": 2000,
-        "genre": "Action",
-        "rating": 8.5,
-        "image": "https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg"
-      },
-      {
-        "id": 9,
-        "title": "The Godfather",
-        "year": 1972,
-        "genre": "Crime",
-        "rating": 9.2,
-        "image": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
-      },
-      {
-        "id": 10,
-        "title": "Pulp Fiction",
-        "year": 1994,
-        "genre": "Crime",
-        "rating": 8.9,
-        "image": "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg"
-      }
-    ]
-  }
-  
+  "movies": [
+    {
+      "id": "1",
+      "title": "Inception",
+      "year": 2010,
+      "genre": "Sci-Fi",
+      "rating": 8.8,
+      "image": "https://image.tmdb.org/t/p/w500/s3TBrRGB1iav7gFOCNx3H31MoES.jpg"
+    },
+    {
+      "id": "2",
+      "title": "The Dark Knight",
+      "year": 2008,
+      "genre": "Action",
+      "rating": 9,
+      "image": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+    },
+    {
+      "id": "3",
+      "title": "Interstellar",
+      "year": 2014,
+      "genre": "Adventure",
+      "rating": 8.6,
+      "image": "https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg"
+    },
+    {
+      "id": "4",
+      "title": "Avengers: Endgame",
+      "year": 2019,
+      "genre": "Superhero",
+      "rating": 8.4,
+      "image": "https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg"
+    },
+    {
+      "id": "5",
+      "title": "The Matrix",
+      "year": 1999,
+      "genre": "Sci-Fi",
+      "rating": 8.7,
+      "image": "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
+    },
+    {
+      "id": "6",
+      "title": "Forrest Gump",
+      "year": 1994,
+      "genre": "Drama",
+      "rating": 8.8,
+      "image": "https://image.tmdb.org/t/p/w500/saHP97rTPS5eLmrLQEcANmKrsFl.jpg"
+    },
+    {
+      "id": "7",
+      "title": "The Shawshank Redemption",
+      "year": 1994,
+      "genre": "Drama",
+      "rating": 9.3,
+      "image": "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
+    },
+    {
+      "id": "8",
+      "title": "Gladiator",
+      "year": 2000,
+      "genre": "Action",
+      "rating": 8.5,
+      "image": "https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg"
+    },
+    {
+      "id": "9",
+      "title": "The Godfather",
+      "year": 1972,
+      "genre": "Crime",
+      "rating": 9.2,
+      "image": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
+    },
+    {
+      "id": "10",
+      "title": "Pulp Fiction",
+      "year": 1994,
+      "genre": "Crime",
+      "rating": 8.9,
+      "image": "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "ad82",
+      "movieTitle": "Interstellar",
+      "dateTime": "2025-05-06T18:00",
+      "seats": [
+        "A2"
+      ],
+      "totalAmount": 60
+    },
+    {
+      "id": "5539",
+      "movieTitle": "Interstellar",
+      "dateTime": "2025-05-05T18:00",
+      "seats": [
+        "A3"
+      ],
+      "totalAmount": 60
+    },
+    {
+      "id": "adea",
+      "movieTitle": "Interstellar",
+      "dateTime": "2025-05-05T18:00",
+      "seats": [
+        "A3"
+      ],
+      "totalAmount": 60
+    },
+    {
+      "id": "fd88",
+      "movieTitle": "Interstellar",
+      "dateTime": "2025-05-05T10:00",
+      "seats": [
+        "A3"
+      ],
+      "totalAmount": 60
+    },
+    {
+      "id": "33b8",
+      "movieTitle": "Avengers: Endgame",
+      "dateTime": "2025-05-05T18:00",
+      "seats": [
+        "A3"
+      ],
+      "totalAmount": 60
+    },
+    {
+      "id": "702d",
+      "movieTitle": "Interstellar",
+      "dateTime": "2025-05-05T18:00",
+      "seats": [
+        "A4"
+      ],
+      "totalAmount": 60
+    },
+    {
+      "id": "4930",
+      "movieTitle": "Avengers: Endgame",
+      "dateTime": "2025-05-06T18:00",
+      "seats": [
+        "A5"
+      ],
+      "totalAmount": 60
+    },
+    {
+      "id": "e7a0",
+      "movieTitle": "Forrest Gump",
+      "dateTime": "2025-05-05T14:30",
+      "seats": [
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C9"
+      ],
+      "totalAmount": 300
+    }
+  ]
+}
